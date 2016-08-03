@@ -14,7 +14,6 @@
         Date.now() - cachedTemps[location].time < cacheDuration) {
       //Weather data is cached
       callback(cachedTemps[location].data);
-      console.log('cached');
       return;
     }
 
@@ -47,6 +46,9 @@
         case 'temperature':
           val = weatherData.main.temp;
           break;
+        case 'weather':
+          val = weatherData.weather[0].description;
+          break;
         case 'humidity':
           val = weatherData.main.humidity;
           break;
@@ -55,21 +57,6 @@
           break;
         case 'cloudiness':
           val = weatherData.clouds.all;
-          break;
-        case 'sunrise':
-          var date = new Date(weatherData.sys.sunrise * 1000);
-          console.log(date);
-          val = date.getHours() + ":";
-          if (date.getMinutes() < 10)
-            val += '0';
-          val += date.getMinutes();
-          break;
-        case 'sunset':
-          var date = new Date(weatherData.sys.sunset * 1000);
-          val = date.getHours() + ":";
-          if (date.getMinutes() < 10)
-            val += '0';
-          val += date.getMinutes();
           break;
       }
       callback(val);
@@ -94,7 +81,7 @@
       ['H', 'when %m.eventData in %s is %m.ops %n', 'whenWeather', 'temperature', 'Boston, MA', '>', 80]
     ],
     menus: {
-      reporterData: ['temperature', 'humidity', 'wind speed', 'cloudiness', 'sunrise', 'sunset'],
+      reporterData: ['temperature', 'weather', 'humidity', 'wind speed', 'cloudiness'],
       eventData: ['temperature', 'humidity', 'wind speed', 'cloudiness'],
       ops: ['>','=', '<']
     }
