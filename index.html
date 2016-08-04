@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>Scratch Weather Extension</title>
+<link rel="stylesheet" type="text/css" href="style.css"></link>
+</head>
+<body>
+
+<div id="header-container">
+  <header>
+    <h1>Scratch Weather Extension</h1>
+  </header>
+</div>
+
+<div id="content-container">
+
+  <h1>Contents</h1>
+
+  <ul id="nav">
+    <li><a href="#intro">Introduction</a></li>
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#blocks">Scratch Blocks</a></li>
+    <li><a href="#examples">Example Projects</a></li>
+  </ul>
+
+  <a name="intro" />
+  <h1>Introduction</h1>
+
+  <p>This <a href="https://scratch.mit.edu">Scratch</a> extension lets you access current weather information for locations all around the world. You can access temperature, humidy, wind speed, cloudiness, and even trigger events when certain weather conditions are met.</p>
+
+  <p>The weather data is provideded by <a href="http://openweathermap.org">OpenWeatherMap</a>.</p>
+
+  <img width="600" src="res/screenshot.png" />
+  <br />
+  <i>Example project Weather Around the World</i>
+
+  <a name="getting-started" />
+  <h1>Getting Started</h1>
+
+  <p>All you need to use the weather extension is an active internet connection.</p>
+
+  <a target="_new" href="http://scratchx.org/?url=https://khanning.github.io/scratch-weather-extension/weather_extension.js">Load the Weather extension on ScratchX</a>
+
+  <a name="blocks" />
+  <h1>Scratch Blocks</h1>
+  <p>This is a brief description of each of the Scratch blocks included in the Weather extension.</p>
+  <br />
+
+  <div class="block">
+  <img height="40" src="res/blocks/get-weather.png" />
+  <p>Gets current weather information for a certain location.<br /></p>
+  <dl>
+    <dt>temperature</dt>
+    <dd>The temperature in degrees fahrenheit</dd>
+    <dt>weather</dt>
+    <dd>A short description of the current weather conditions (e.g. clear sky, broken clouds, etc.)</dd>
+    <dt>humidity</dt>
+    <dd>The humidity between 0 and 100%</dd>
+    <dt>wind speed</dt>
+    <dd>The wind speed in miles per hour</dd>
+    <dt>cloudiness</dt>
+    <dd>The amount of cloud cover between 0 and 100%</dd>
+  </dl>
+  </div>
+
+  <hr />
+
+  <div class="block">
+  <img height="68" src="res/blocks/when-weather.png" />
+  <p>Runs when the weather meets a certain condition.</p>
+  </div>
+
+  <a name="examples" />
+  <h1>Example Projects</h1>
+
+  <dl>
+    <dt><a target="_new" href="http://scratchx.org/?url=https://khanning.github.io/scratch-weather-extension/examples/WeatherExample.sbx">Weather Example</a></dt>
+    <dd>Displays current weather information for Cambridge, MA and adjust the visibility of the cloud sprites based on current cloud cover.</dd>
+    <dt><a target="_new" href="http://scratchx.org/?url=https://khanning.github.io/scratch-weather-extension/examples/WeatherAroundTheWorld.sbx">Weather Around the World</a></dt>
+    <dd>Displays current temperature information from a few locations around the world.</dd>
+  </dl>
+
+</div>
+
+<br />
+
+</body>
+</html>
