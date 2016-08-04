@@ -5,8 +5,30 @@
 (function(ext) {
   var APPID = '960f7f58abbc5c98030d1899739c1ba8';
 
-  var cacheDuration = 60 * 60 * 1000 //60 minutes in ms
+  var cacheDuration = 1800000 //ms, 30 minutes
   var cachedTemps = {};
+
+  function getWeatherData(weatherData, type) {
+    var val = null;
+    switch (type) {
+      case 'temperature':
+        val = weatherData.main.temp;
+        break;
+      case 'weather':
+        val = weatherData.weather[0].description;
+        break;
+      case 'humidity':
+        val = weatherData.main.humidity;
+        break;
+      case 'wind speed':
+        val = weatherData.wind.speed * 2.23694;
+        break;
+      case 'cloudiness':
+        val = weatherData.clouds.all;
+        break;
+    }
+    return(val);
+  }
 
   function fetchWeatherData(location, callback) {
 
@@ -40,45 +62,36 @@
   };
 
   ext.getWeather = function(type, location, callback) {
-    var temperature = fetchWeatherData(location, function(weatherData) {
-      var val = null;
-      switch (type) {
-        case 'temperature':
-          val = weatherData.main.temp;
-          break;
-        case 'weather':
-          val = weatherData.weather[0].description;
-          break;
-        case 'humidity':
-          val = weatherData.main.humidity;
-          break;
-        case 'wind speed':
-          val = weatherData.wind.speed * 2.23694;
-          break;
-        case 'cloudiness':
-          val = weatherData.clouds.all;
-          break;
-      }
+    fetchWeatherData(location, function(data) {
+      var val = getWeatherData(data, type);
       callback(val);
     });
   };
 
-  ext.whenWeather = function(type, location, op, val, callback) {
-    ext.getWeather(type, location, function(v) {
-      if (op === '<')
-        callback((v < val));
-      else if (op === '=')
-        callback((v == val));
-      else if (op === '>')
-        callback((v > val));
-    });
+  ext.whenWeather = function(type, location, op, val) {
+    if (!cachedTemps[location]) {
+      //Weather data not cached
+      //Fetch it and return false for now
+      fetchWeatherData(location, function(){});
+      return false;
+    }
+    //Weather data is cached, no risk of blocking
+    var data = getWeatherData(cachedTemps[location].data, type);
+    switch (op) {
+      case '<':
+        return (data < val);
+      case '=':
+        return (data == val);
+      case '>':
+        return (data > val);
+    }
   };
 
   // Block and block menu descriptions
   var descriptor = {
     blocks: [
       ['R', '%m.reporterData in %s', 'getWeather', 'temperature', 'Boston, MA'],
-      ['H', 'when %m.eventData in %s is %m.ops %n', 'whenWeather', 'temperature', 'Boston, MA', '>', 80]
+      ['h', 'when %m.eventData in %s is %m.ops %n', 'whenWeather', 'temperature', 'Boston, MA', '>', 80]
     ],
     menus: {
       reporterData: ['temperature', 'weather', 'humidity', 'wind speed', 'cloudiness'],
