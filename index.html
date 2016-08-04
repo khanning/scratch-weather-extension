@@ -50,13 +50,13 @@
   <p>Gets current weather information for a certain location.<br /></p>
   <dl>
     <dt>temperature</dt>
-    <dd>The temperature in degrees fahrenheit</dd>
+    <dd>The temperature in degrees fahrenheit (imperial) or celsius (metric)</dd>
     <dt>weather</dt>
     <dd>A short description of the current weather conditions (e.g. clear sky, broken clouds, etc.)</dd>
     <dt>humidity</dt>
     <dd>The humidity between 0 and 100%</dd>
     <dt>wind speed</dt>
-    <dd>The wind speed in miles per hour</dd>
+    <dd>The wind speed in miles per hour (imperial) or meters per second (metric)</dd>
     <dt>cloudiness</dt>
     <dd>The amount of cloud cover between 0 and 100%</dd>
   </dl>
@@ -67,6 +67,20 @@
   <div class="block">
   <img height="68" src="res/blocks/when-weather.png" />
   <p>Runs when the weather meets a certain condition.</p>
+  </div>
+
+  <hr />
+
+  <div class="block">
+  <img height="50" src="res/blocks/set-units.png" />
+  <p>Sets the unit format to either imperial or metric.</p>
+  </div>
+
+  <hr />
+
+  <div class="block">
+  <img height="38" src="res/blocks/get-units.png" />
+  <p>Gets the current unit format.</p>
   </div>
 
   <a name="examples" />

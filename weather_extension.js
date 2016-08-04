@@ -8,11 +8,16 @@
   var cacheDuration = 1800000 //ms, 30 minutes
   var cachedTemps = {};
 
+  var units = 'imperial';
+
   function getWeatherData(weatherData, type) {
     var val = null;
     switch (type) {
       case 'temperature':
         val = weatherData.main.temp;
+        if (units === 'metric')
+          val = (val - 32) * (5/9)
+        val = Math.round(val);
         break;
       case 'weather':
         val = weatherData.weather[0].description;
@@ -21,7 +26,11 @@
         val = weatherData.main.humidity;
         break;
       case 'wind speed':
-        val = weatherData.wind.speed * 2.23694;
+        val = weatherData.wind.speed;
+        if (units === 'imperial')
+          val *= 2.23694;
+        if (Math.round(val) !== val)
+          val = val.toFixed(1);
         break;
       case 'cloudiness':
         val = weatherData.clouds.all;
@@ -87,16 +96,28 @@
     }
   };
 
+  ext.setUnits = function(format) {
+    units = format;
+    return;
+  };
+
+  ext.getUnits = function() {
+    return units;
+  };
+
   // Block and block menu descriptions
   var descriptor = {
     blocks: [
       ['R', '%m.reporterData in %s', 'getWeather', 'temperature', 'Boston, MA'],
-      ['h', 'when %m.eventData in %s is %m.ops %n', 'whenWeather', 'temperature', 'Boston, MA', '>', 80]
+      ['h', 'when %m.eventData in %s is %m.ops %n', 'whenWeather', 'temperature', 'Boston, MA', '>', 80],
+      [' ', 'set units to %m.units', 'setUnits', 'imperial'],
+      ['r', 'unit format', 'getUnits']
     ],
     menus: {
       reporterData: ['temperature', 'weather', 'humidity', 'wind speed', 'cloudiness'],
       eventData: ['temperature', 'humidity', 'wind speed', 'cloudiness'],
-      ops: ['>','=', '<']
+      ops: ['>','=', '<'],
+      units: ['imperial', 'metric']
     }
   };
 
